@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_najot_8/utils/app_colors.dart';
 import 'package:flutter_najot_8/utils/app_images.dart';
+import 'package:flutter_najot_8/utils/size_utils.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(App());
@@ -11,9 +13,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: Scaffold(
+        body: Center(
+          child: SvgPicture.asset(
+            AppImages.react,
+            width: 300,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -23,6 +32,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    print("WIDTH:$width");
+    print("HEIGHT:$height");
     return Scaffold(
       backgroundColor: AppColors.appMainColor,
       appBar: AppBar(
@@ -57,21 +70,24 @@ class HomeScreen extends StatelessWidget {
             children: [
               Image.asset(
                 AppImages.bicycle,
-                height: 0.45 * MediaQuery.of(context).size.height,
+                height: getHomePicsHeight(height),
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 28),
+          Padding(
+            padding: const EdgeInsets.only(left: 28),
             child: Text(
               "Let’s \nget started",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: "Sora",
-                fontSize: 48,
+                fontSize: height > 600 ? 48 : 35.46,
                 fontWeight: FontWeight.w600,
               ),
             ),
+            //812 --->48
+            //600 ---x
+            //x =
           ),
           const SizedBox(height: 24),
           const Padding(
@@ -87,9 +103,17 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          _getMyButton(buttonText: "Log in", btnColor: AppColors.C_FFCA42),
+          _getMyButton(
+            buttonText: "Log in",
+            btnColor: AppColors.C_FFCA42,
+            height: height,
+          ),
           const SizedBox(height: 16),
-          _getMyButton(buttonText: "Sign up", btnColor: AppColors.C_D5E7D4),
+          _getMyButton(
+            buttonText: "Sign up",
+            btnColor: AppColors.C_D5E7D4,
+            height: height,
+          ),
         ],
       ),
     );
@@ -98,13 +122,14 @@ class HomeScreen extends StatelessWidget {
   Widget _getMyButton({
     required String buttonText,
     required Color btnColor,
+    required double height,
   }) {
     return GestureDetector(
       onTap: () {
         print("AAA");
       },
       child: Container(
-        height: 50,
+        height: height > 600 ? 50 : 35,
         margin: const EdgeInsets.symmetric(horizontal: 28),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100), color: btnColor),
@@ -119,6 +144,41 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class TestScreen extends StatelessWidget {
+  const TestScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: SafeArea(
+          child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.red,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.green,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.yellowAccent,
+            ),
+          )
+        ],
+      )),
     );
   }
 }

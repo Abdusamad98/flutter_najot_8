@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_najot_8/ui/home_screen/home_screen.dart';
+import 'package:flutter_najot_8/ui/home_work/home_work_screen.dart';
 
 void main() {
   runApp(App());
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomeScreen()
+      home:HomeWorkScreen()
     );
   }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_najot_8/ui/home_screen/widgets/back_image.dart';
+import 'package:flutter_najot_8/ui/home_screen/widgets/food_item.dart';
+import 'package:flutter_najot_8/ui/home_screen/widgets/search_view.dart';
+import 'package:flutter_najot_8/ui/home_screen/widgets/top_view.dart';
 import 'package:flutter_najot_8/utils/my_colors.dart';
 import 'package:flutter_najot_8/utils/my_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,88 +15,48 @@ class HomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: height * (400 / 812),
-                foregroundDecoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.white,
-                      Colors.white.withOpacity(0.3),
-                    ],
-                  ),
-                ),
-                child: Image.asset(MyIcons.pattern),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      MyIcons.logo,
-                      height: height * (139 / 812),
-                    ),
-                    const Text(
-                      "MasmasFood",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 40,
-                          color: MyColors.C_53E88B),
-                    ),
-                    const Text(
-                      "Deliever Favorite Food",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * (60 / 812),
-                    ),
-                    const Text(
-                      "Login To Your Account",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Row(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Stack(
               children: [
-                getSocialWidget(
-                  image: MyIcons.facebook,
-                  title: "Facebook",
-                ),
-                const SizedBox(
-                  width: 21,
-                ),
-                getSocialWidget(
-                  image: MyIcons.google,
-                  title: "Google",
-                ),
+                BackImage(height: height),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 50),
+                        const TopView(),
+                        const SizedBox(height: 18),
+                        SearchView(),
+                        SizedBox(height: 20),
+                        SvgPicture.asset(MyIcons.clear),
+                        SizedBox(height: 20),
+                        Text(
+                          "Popular menu",
+                          style: TextStyle(
+                              color: MyColors.C_09051C,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        ...List.generate(
+                          3,
+                          (index) => FoodItem(
+                              iconPath: MyIcons.food,
+                              title: "Herbal Pancake",
+                              subTitle: "Warung Herbal",
+                              trailing: "\$7"),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-          Spacer(),
-          getButton2(),
-          const SizedBox(
-            height: 21,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
